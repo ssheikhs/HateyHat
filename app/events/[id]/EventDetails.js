@@ -200,7 +200,7 @@ export default function EventDetails({ id }) {
             <span className="badge badge-ghost">{daysUntil(event.eventDate)}</span>
             {isOwner && <span className="badge badge-primary">You&apos;re organizing this</span>}
           </div>
-          <h1 className="mt-4 text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] font-extrabold [font-variation-settings:'wdth'_82]">
+          <h1 className="mt-4 text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] font-bold [font-stretch:92%]">
             {event.title}
           </h1>
           <div className="mt-6 max-w-[68ch] whitespace-pre-line text-lg text-base-content/85">{event.description}</div>

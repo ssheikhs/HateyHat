@@ -63,7 +63,7 @@ export default function LoginForm() {
       return;
     }
 
-    toast.success(`Welcome back, ${data?.user?.name?.split(" ")[0] || "friend"}!`);
+    toast.success(`Welcome back, ${data?.user?.name || "friend"}!`);
     router.push(redirectTo);
     router.refresh();
   };

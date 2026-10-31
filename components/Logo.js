@@ -15,7 +15,7 @@ export default function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="HateyHat home">
       <LogoMark />
-      <span className="font-display text-2xl font-extrabold tracking-tight [font-variation-settings:'wdth'_80]">
+      <span className="font-display text-2xl font-bold tracking-tight [font-stretch:105%]">
         HateyHat
       </span>
     </Link>

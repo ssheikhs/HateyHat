@@ -86,7 +86,7 @@ export default function RegisterForm() {
       return;
     }
 
-    toast.success(`Welcome to HateyHat, ${cleanName(values.name).split(" ")[0]}!`);
+    toast.success(`Welcome to HateyHat, ${cleanName(values.name)}!`);
     router.push(redirectTo);
     router.refresh();
   };

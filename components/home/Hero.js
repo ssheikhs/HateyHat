@@ -48,7 +48,7 @@ export default function Hero() {
       <div className="container-page grid items-center gap-12 py-14 md:py-20 lg:grid-cols-[1.1fr_1fr]">
         <div>
           <p className="font-display text-xl font-semibold text-primary">হাতে হাত · hand in hand</p>
-          <h1 className="mt-4 text-[clamp(2.6rem,1.6rem+4.2vw,4.75rem)] font-extrabold [font-variation-settings:'wdth'_78]">
+          <h1 className="mt-4 text-[clamp(2.6rem,1.6rem+4.2vw,4.75rem)] font-bold [font-stretch:92%]">
             Your neighbourhood needs a few more hands this weekend.
           </h1>
           <p className="mt-6 max-w-[54ch] text-lg text-base-content/75">

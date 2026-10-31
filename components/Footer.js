@@ -21,7 +21,7 @@ export default function Footer() {
             <span className="rounded-full bg-[#eceaf8] p-1">
               <LogoMark className="h-9 w-9" />
             </span>
-            <span className="font-display text-2xl font-extrabold [font-variation-settings:'wdth'_80]">HateyHat</span>
+            <span className="font-display text-2xl font-bold [font-stretch:105%]">HateyHat</span>
           </Link>
           <p className="mt-4 max-w-xs text-[#eceaf8]/75">
             হাতে হাত — hand in hand. A meeting place for neighbours who want to clean up, plant, donate and look out for each other.
