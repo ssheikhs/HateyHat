@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Avatar from "@/components/Avatar";
 import FormField from "@/components/FormField";
+import ImageInput from "@/components/ImageInput";
 import { updateUser, useSession } from "@/lib/auth-client";
 import { clearToken } from "@/lib/api";
 import { useApi } from "@/lib/useApi";
@@ -114,8 +115,17 @@ function ProfileContent({ user, refetch }) {
         <FormField label="Name" htmlFor="name" error={errors.name}>
           <input id="name" name="name" className={`input w-full ${errors.name ? "input-error" : ""}`} value={values.name} onChange={update} aria-invalid={!!errors.name} />
         </FormField>
-        <FormField label="Photo URL" htmlFor="image" error={errors.image} hint="Leave empty to show your initials.">
-          <input id="image" name="image" type="url" className={`input w-full ${errors.image ? "input-error" : ""}`} value={values.image} onChange={update} placeholder="https://..." aria-invalid={!!errors.image} />
+        <FormField label="Profile photo" htmlFor="image" error={errors.image} hint="Leave empty to show your initials.">
+          <ImageInput
+            id="image"
+            shape="round"
+            value={values.image}
+            error={errors.image}
+            onChange={(url) => {
+              setValues((v) => ({ ...v, image: url }));
+              if (errors.image) setErrors((err) => ({ ...err, image: undefined }));
+            }}
+          />
         </FormField>
         <FormField label="Email" htmlFor="email" hint="Your email can't be changed.">
           <input id="email" className="input w-full" value={user.email} disabled />

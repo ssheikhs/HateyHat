@@ -4,6 +4,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import FormField from "@/components/FormField";
+import ImageInput from "@/components/ImageInput";
 import { EVENT_TYPES, toLocalInput } from "@/lib/format";
 
 const empty = { title: "", description: "", eventType: "", thumbnail: "", location: "", eventDate: "" };
@@ -22,7 +23,7 @@ export function validateEventForm(values, { requireFutureDate = true } = {}) {
     const url = new URL(values.thumbnail.trim());
     if (!["http:", "https:"].includes(url.protocol)) throw new Error();
   } catch {
-    errors.thumbnail = "Enter an image link that starts with http:// or https://";
+    errors.thumbnail = "Upload a thumbnail image or paste a link that starts with http:// or https://";
   }
   if (location.length < 3 || location.length > 150) errors.location = "Location must be 3 to 150 characters.";
 
@@ -116,8 +117,17 @@ export default function EventForm({ initialValues, onSubmit, submitLabel, submit
           <input id="location" name="location" className={`input w-full ${field("location")}`} value={values.location} onChange={update} placeholder="Mirpur 10, Dhaka" maxLength={150} aria-invalid={!!errors.location} />
         </FormField>
 
-        <FormField label="Thumbnail image URL" htmlFor="thumbnail" error={errors.thumbnail}>
-          <input id="thumbnail" name="thumbnail" type="url" className={`input w-full ${field("thumbnail")}`} value={values.thumbnail} onChange={update} placeholder="https://..." aria-invalid={!!errors.thumbnail} />
+        <FormField label="Thumbnail image" htmlFor="thumbnail" error={errors.thumbnail}>
+          <ImageInput
+            id="thumbnail"
+            value={values.thumbnail}
+            error={errors.thumbnail}
+            onChange={(url) => {
+              setValues((v) => ({ ...v, thumbnail: url }));
+              setPreviewOk(true);
+              if (errors.thumbnail) setErrors((err) => ({ ...err, thumbnail: undefined }));
+            }}
+          />
         </FormField>
 
         <button type="submit" className="btn btn-primary btn-lg rounded-full px-10" disabled={submitting}>
