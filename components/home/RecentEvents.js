@@ -30,7 +30,7 @@ export default function RecentEvents() {
   const { data: events, loading, error, reload } = useApi("/events/featured");
 
   return (
-    <section className="bg-base-200 py-20">
+    <section className="bg-base-200 py-20 [--page-bg:var(--color-base-200)]">
       <div className="container-page">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>

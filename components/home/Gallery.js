@@ -1,41 +1,47 @@
 /* eslint-disable @next/next/no-img-element */
-const photos = [
-  { id: "photo-1758599668429-121d54188b9c", caption: "Park cleanup, Saturday morning" },
-  { id: "photo-1599059813005-11265ba4b4ce", caption: "Sorting the food bank shelves" },
-  { id: "photo-1598335624134-5bceb5de202d", caption: "First sapling of the season" },
-  { id: "photo-1593113598332-cd288d649433", caption: "Loading fresh produce for families" },
-  { id: "photo-1783028104792-8506735c0383", caption: "Relief tent, ready by noon" },
-  { id: "photo-1488521787991-ed7bbaae773c", caption: "After-school learning circle" },
-  { id: "photo-1542601906990-b4d3fb778b09", caption: "Seedlings for the river bank" },
-  { id: "photo-1582213782179-e0d53f98f2ca", caption: "Same team, next event" },
-];
+import { galleryPhotos, photos } from "@/lib/photos";
 
 export default function Gallery() {
   return (
     <section className="container-page py-20">
       <div className="max-w-2xl">
-        <h2 className="section-title">From past events</h2>
+        <h2 className="section-title">Volunteers across Bangladesh</h2>
         <p className="section-lead mt-3">
-          A few moments from cleanups, food drives and plantations organized by the community.
+          From relief drives at Dhaka University to winter clothes in the north and cleanups on Saint Martin&apos;s Island,
+          this is the work HateyHat helps organize.
         </p>
       </div>
       <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-        {photos.map((photo) => (
-          <li key={photo.id}>
+        {galleryPhotos.map((photo) => (
+          <li key={photo.src}>
             <figure className="group relative aspect-square overflow-hidden rounded-box bg-base-200">
               <img
-                src={`https://images.unsplash.com/${photo.id}?auto=format&fit=crop&w=600&h=600&q=70`}
-                alt={photo.caption}
+                src={photo.src}
+                alt={photo.alt}
                 loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-3 pt-10 text-sm font-medium text-white">
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3 pt-12 text-sm font-medium leading-snug text-white">
                 {photo.caption}
               </figcaption>
             </figure>
           </li>
         ))}
       </ul>
+      <details className="mt-6 text-sm text-base-content/60">
+        <summary className="cursor-pointer w-fit">Photo credits</summary>
+        <p className="mt-2">Photos of community work across the site, used under their open licences.</p>
+        <ul className="mt-2 space-y-1">
+          {Object.values(photos).map((photo) => (
+            <li key={photo.page}>
+              <a href={photo.page} target="_blank" rel="noopener noreferrer" className="link link-hover">
+                {photo.caption}
+              </a>{" "}
+              — {photo.credit}, {photo.license}, via Wikimedia Commons
+            </li>
+          ))}
+        </ul>
+      </details>
     </section>
   );
 }

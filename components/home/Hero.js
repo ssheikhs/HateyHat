@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { useApi } from "@/lib/useApi";
 import { dateParts } from "@/lib/format";
+import { photos } from "@/lib/photos";
 
 function NextUpTicket() {
   const { data, loading } = useApi("/events/featured");
@@ -67,18 +68,18 @@ export default function Hero() {
         <div className="relative">
           <div className="grid grid-cols-5 grid-rows-6 gap-3 h-[26rem] sm:h-[30rem]">
             <img
-              src="https://images.unsplash.com/photo-1593113616828-6f22bca04804?auto=format&fit=crop&w=900&q=75"
-              alt="Volunteers in blue shirts packing food into bags"
+              src={photos.duReliefCollection.src}
+              alt={photos.duReliefCollection.alt}
               className="col-span-3 row-span-6 h-full w-full rounded-box object-cover"
             />
             <img
-              src="https://images.unsplash.com/photo-1598335624134-5bceb5de202d?auto=format&fit=crop&w=600&q=75"
-              alt="A woman and a child planting a small tree"
+              src={photos.treeRally.src}
+              alt={photos.treeRally.alt}
               className="col-span-2 row-span-3 h-full w-full rounded-box object-cover"
             />
             <img
-              src="https://images.unsplash.com/photo-1758599668429-121d54188b9c?auto=format&fit=crop&w=600&q=75"
-              alt="Volunteers cleaning a park with trash bags"
+              src={photos.floodReliefNeedy.src}
+              alt={photos.floodReliefNeedy.alt}
               className="col-span-2 row-span-3 h-full w-full rounded-box object-cover"
             />
           </div>

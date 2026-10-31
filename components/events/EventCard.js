@@ -2,9 +2,9 @@
 import Link from "next/link";
 import { LuMapPin, LuUsers } from "react-icons/lu";
 import { dateParts, daysUntil } from "@/lib/format";
+import { FALLBACK_IMAGE } from "@/lib/photos";
 
-export const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=900&q=70";
+export { FALLBACK_IMAGE };
 
 export default function EventCard({ event, footer }) {
   const { day, month, weekday, time } = dateParts(event.eventDate);

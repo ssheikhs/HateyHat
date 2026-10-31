@@ -4,35 +4,39 @@
   themes: false;
 }
 
-/* Light: paddy-field green, marigold garlands, cool paper */
+/*
+  Palette — "Nil o Holud" (indigo and turmeric)
+  Bengal indigo (nil) for structure, turmeric (holud) for the moments that
+  matter, shapla pink for alerts and highlights, on a cool paper white.
+*/
 @plugin "daisyui/theme" {
   name: "hateyhat";
   default: true;
   prefersdark: false;
   color-scheme: light;
-  --color-base-100: #fbfcf8;
-  --color-base-200: #f1f4ec;
-  --color-base-300: #dfe6d8;
-  --color-base-content: #17241c;
-  --color-primary: #1f6f4a;
-  --color-primary-content: #f4fbf6;
-  --color-secondary: #c2185b;
-  --color-secondary-content: #fff5f9;
-  --color-accent: #f2a900;
-  --color-accent-content: #2b1d00;
-  --color-neutral: #17241c;
-  --color-neutral-content: #eef3ee;
-  --color-info: #1d6fa5;
-  --color-info-content: #f2f8fd;
-  --color-success: #2f8f5b;
-  --color-success-content: #f3fbf6;
-  --color-warning: #d98e04;
-  --color-warning-content: #231600;
-  --color-error: #c0392b;
-  --color-error-content: #fff4f2;
+  --color-base-100: #ffffff;
+  --color-base-200: #f5f4fb;
+  --color-base-300: #e3e1f0;
+  --color-base-content: #1b1938;
+  --color-primary: #2f2a8f;
+  --color-primary-content: #ffffff;
+  --color-secondary: #c8336e;
+  --color-secondary-content: #ffffff;
+  --color-accent: #f2a516;
+  --color-accent-content: #2a1a00;
+  --color-neutral: #1b1938;
+  --color-neutral-content: #f5f4fb;
+  --color-info: #2563a8;
+  --color-info-content: #ffffff;
+  --color-success: #13795b;
+  --color-success-content: #ffffff;
+  --color-warning: #c77700;
+  --color-warning-content: #ffffff;
+  --color-error: #c4283c;
+  --color-error-content: #ffffff;
   --radius-selector: 2rem;
-  --radius-field: 0.6rem;
-  --radius-box: 1rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.25rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
@@ -40,35 +44,34 @@
   --noise: 0;
 }
 
-/* Dark: monsoon night */
 @plugin "daisyui/theme" {
   name: "hateyhat-dark";
   default: false;
   prefersdark: true;
   color-scheme: dark;
-  --color-base-100: #0f1a14;
-  --color-base-200: #15241b;
-  --color-base-300: #213528;
-  --color-base-content: #e4ece6;
-  --color-primary: #52c08a;
-  --color-primary-content: #062214;
-  --color-secondary: #f06292;
+  --color-base-100: #121126;
+  --color-base-200: #1a1934;
+  --color-base-300: #2c2a4d;
+  --color-base-content: #eceaf8;
+  --color-primary: #a49eff;
+  --color-primary-content: #121126;
+  --color-secondary: #f27aa6;
   --color-secondary-content: #2a0614;
-  --color-accent: #f5b82e;
+  --color-accent: #f6b93b;
   --color-accent-content: #241800;
-  --color-neutral: #e4ece6;
-  --color-neutral-content: #0f1a14;
-  --color-info: #5aa9dc;
-  --color-info-content: #04131d;
-  --color-success: #52c08a;
-  --color-success-content: #062214;
-  --color-warning: #f5b82e;
+  --color-neutral: #eceaf8;
+  --color-neutral-content: #121126;
+  --color-info: #7ab3ea;
+  --color-info-content: #06131f;
+  --color-success: #4cc79a;
+  --color-success-content: #04170f;
+  --color-warning: #f6b93b;
   --color-warning-content: #241800;
-  --color-error: #f0715f;
-  --color-error-content: #2a0703;
+  --color-error: #ff7b8a;
+  --color-error-content: #2a0509;
   --radius-selector: 2rem;
-  --radius-field: 0.6rem;
-  --radius-box: 1rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.25rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
@@ -77,7 +80,7 @@
 }
 
 @theme {
-  --font-display: "Bricolage Grotesque Variable", "Hind Siliguri", system-ui, sans-serif;
+  --font-display: "Anek Bangla Variable", "Hind Siliguri", system-ui, sans-serif;
   --font-sans: "Hind Siliguri", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
@@ -100,22 +103,23 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
 }
 
 /* One heading style for every section */
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(1.85rem, 1.3rem + 2vw, 2.75rem);
+  font-size: clamp(1.9rem, 1.35rem + 2vw, 2.85rem);
   font-weight: 700;
-  font-variation-settings: "wdth" 85;
+  font-stretch: 88%;
   color: var(--color-base-content);
 }
 
 .section-lead {
   max-width: 62ch;
-  color: color-mix(in oklab, var(--color-base-content) 72%, transparent);
+  color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
 }
 
 .container-page {
@@ -133,7 +137,8 @@ h4 {
 
 /*
   Event "ticket": the signature shape of HateyHat.
-  A date stub is torn off from the body along a perforated line.
+  The date stub is joined to the card by a turmeric running stitch —
+  the kantha stitch of Bengali quilts.
 */
 .ticket {
   --notch: 11px;
@@ -145,18 +150,23 @@ h4 {
 
 .ticket-perforation {
   position: relative;
-  border-top: 2px dashed var(--color-base-300);
+  height: 2px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-accent) 0 9px,
+    transparent 9px 16px
+  );
 }
 
 .ticket-perforation::before,
 .ticket-perforation::after {
   content: "";
   position: absolute;
-  top: calc(var(--notch) * -1 - 1px);
+  top: calc(var(--notch) * -1 + 1px);
   width: calc(var(--notch) * 2);
   height: calc(var(--notch) * 2);
   border-radius: 9999px;
-  background: var(--color-base-200);
+  background: var(--page-bg, var(--color-base-100));
   border: 1px solid var(--color-base-300);
 }
 
@@ -172,7 +182,7 @@ h4 {
 
 .date-stub-day {
   font-family: var(--font-display);
-  font-variation-settings: "wdth" 75;
+  font-stretch: 75%;
   font-weight: 800;
   line-height: 0.9;
 }

@@ -1,4 +1,4 @@
-import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/anek-bangla/wdth.css";
 import "@fontsource/hind-siliguri/400.css";
 import "@fontsource/hind-siliguri/500.css";
 import "@fontsource/hind-siliguri/600.css";
