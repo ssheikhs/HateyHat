@@ -16,6 +16,7 @@ export function validateEventForm(values, { requireFutureDate = true } = {}) {
   const location = values.location.trim();
 
   if (title.length < 5 || title.length > 100) errors.title = "Title must be 5 to 100 characters.";
+  else if (!/[\p{L}]{3,}/u.test(title)) errors.title = "Title must include words, not just numbers or symbols.";
   if (description.length < 20 || description.length > 2000)
     errors.description = "Describe the event in 20 to 2000 characters.";
   if (!EVENT_TYPES.includes(values.eventType)) errors.eventType = "Choose an event type.";
@@ -31,6 +32,8 @@ export function validateEventForm(values, { requireFutureDate = true } = {}) {
     errors.eventDate = "Pick the date and time of the event.";
   } else if (requireFutureDate && new Date(values.eventDate).getTime() <= Date.now()) {
     errors.eventDate = "The event date must be in the future.";
+  } else if (new Date(values.eventDate).getTime() > Date.now() + 2 * 365 * 86_400_000) {
+    errors.eventDate = "Pick a date within the next two years.";
   }
   return errors;
 }

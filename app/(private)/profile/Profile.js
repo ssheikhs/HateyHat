@@ -10,6 +10,7 @@ import ImageInput from "@/components/ImageInput";
 import { updateUser, useSession } from "@/lib/auth-client";
 import { clearToken } from "@/lib/api";
 import { useApi } from "@/lib/useApi";
+import { cleanName, validateImageUrl, validateName } from "@/lib/validation";
 
 function Counts() {
   const mine = useApi("/events/mine", { auth: true });
@@ -65,15 +66,10 @@ function ProfileContent({ user, refetch }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const found = {};
-    if (values.name.trim().length < 2) found.name = "Enter your name (at least 2 characters).";
-    if (values.image.trim()) {
-      try {
-        const url = new URL(values.image.trim());
-        if (!["http:", "https:"].includes(url.protocol)) throw new Error();
-      } catch {
-        found.image = "Enter a photo link that starts with http:// or https://";
-      }
-    }
+    const nameError = validateName(values.name);
+    if (nameError) found.name = nameError;
+    const imageError = validateImageUrl(values.image, { required: false });
+    if (imageError) found.image = imageError;
     setErrors(found);
     if (Object.keys(found).length) {
       toast.error(Object.values(found)[0]);
@@ -81,7 +77,7 @@ function ProfileContent({ user, refetch }) {
     }
 
     setSaving(true);
-    const { error } = await updateUser({ name: values.name.trim(), image: values.image.trim() || null });
+    const { error } = await updateUser({ name: cleanName(values.name), image: values.image.trim() || null });
     setSaving(false);
     if (error) {
       toast.error(error.message || "Profile couldn't be updated. Try again.");
@@ -93,7 +89,7 @@ function ProfileContent({ user, refetch }) {
     toast.success("Profile updated.");
   };
 
-  const unchanged = values.name.trim() === (user.name || "") && values.image.trim() === (user.image || "");
+  const unchanged = cleanName(values.name) === (user.name || "") && values.image.trim() === (user.image || "");
 
   return (
     <div className="grid gap-10 lg:grid-cols-[22rem_1fr]">
@@ -113,7 +109,7 @@ function ProfileContent({ user, refetch }) {
       <form onSubmit={handleSubmit} noValidate className="max-w-xl space-y-5">
         <h2 className="text-2xl font-bold">Edit profile</h2>
         <FormField label="Name" htmlFor="name" error={errors.name}>
-          <input id="name" name="name" className={`input w-full ${errors.name ? "input-error" : ""}`} value={values.name} onChange={update} aria-invalid={!!errors.name} />
+          <input id="name" name="name" maxLength={50} className={`input w-full ${errors.name ? "input-error" : ""}`} value={values.name} onChange={update} aria-invalid={!!errors.name} />
         </FormField>
         <FormField label="Profile photo" htmlFor="image" error={errors.image} hint="Leave empty to show your initials.">
           <ImageInput
