@@ -6,6 +6,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import ThemeScript from "@/components/ThemeScript";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: {
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen flex flex-col antialiased">
         <Navbar />
         <main className="flex-1">{children}</main>
+        <Footer />
         <Toaster
           position="top-center"
           toastOptions={{
