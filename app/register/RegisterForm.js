@@ -4,57 +4,73 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { LuEye, LuEyeOff } from "react-icons/lu";
 import FormField from "@/components/FormField";
+import PasswordField from "@/components/auth/PasswordField";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { signUp } from "@/lib/auth-client";
-import { getPasswordErrors, passwordMessage } from "@/lib/password";
+import { passwordMessage } from "@/lib/password";
 import { safeRedirect } from "@/lib/redirect";
+import { cleanName, validateEmail, validateImageUrl, validateName } from "@/lib/validation";
 
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const validators = {
+  name: (v) => validateName(v.name),
+  email: (v) => validateEmail(v.email),
+  image: (v) => validateImageUrl(v.image),
+  password: (v) => passwordMessage(v.password),
+  confirm: (v) => (!v.confirm ? "Re-enter your password." : v.confirm !== v.password ? "Passwords don't match." : ""),
+};
 
-function validate(values) {
+function validateAll(values) {
   const errors = {};
-  if (values.name.trim().length < 2) errors.name = "Enter your name (at least 2 characters).";
-  if (!emailPattern.test(values.email.trim())) errors.email = "Enter a valid email address.";
-  try {
-    const url = new URL(values.image.trim());
-    if (!["http:", "https:"].includes(url.protocol)) throw new Error();
-  } catch {
-    errors.image = "Enter a link to your photo that starts with http:// or https://";
+  for (const [key, check] of Object.entries(validators)) {
+    const message = check(values);
+    if (message) errors[key] = message;
   }
-  const pw = passwordMessage(values.password);
-  if (pw) errors.password = pw;
   return errors;
 }
 
 export default function RegisterForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const redirectTo = safeRedirect(params.get("redirect"));
-  const [values, setValues] = useState({ name: "", email: "", image: "", password: "" });
+  const redirectTo = safeRedirect(params.get("redirect"), "/events");
+  const [values, setValues] = useState({ name: "", email: "", image: "", password: "", confirm: "" });
   const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
+  const [touched, setTouched] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
+  // Re-check a field as the user types, but only after they have left it once
   const update = (e) => {
     const { name, value } = e.target;
-    setValues((v) => ({ ...v, [name]: value }));
-    if (errors[name]) setErrors((err) => ({ ...err, [name]: undefined }));
+    const next = { ...values, [name]: value };
+    setValues(next);
+    if (touched[name] || errors[name]) {
+      setErrors((err) => ({ ...err, [name]: validators[name](next) || undefined }));
+    }
+    if (name === "password" && (touched.confirm || errors.confirm)) {
+      setErrors((err) => ({ ...err, confirm: validators.confirm(next) || undefined }));
+    }
+  };
+
+  const blur = (e) => {
+    const { name } = e.target;
+    setTouched((t) => ({ ...t, [name]: true }));
+    setErrors((err) => ({ ...err, [name]: validators[name](values) || undefined }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const found = validate(values);
+    const found = validateAll(values);
     setErrors(found);
+    setTouched({ name: true, email: true, image: true, password: true, confirm: true });
     if (Object.keys(found).length) {
       toast.error(Object.values(found)[0]);
+      document.getElementById(Object.keys(found)[0])?.focus();
       return;
     }
 
     setSubmitting(true);
     const { error } = await signUp.email({
-      name: values.name.trim(),
+      name: cleanName(values.name),
       email: values.email.trim().toLowerCase(),
       password: values.password,
       image: values.image.trim(),
@@ -63,57 +79,41 @@ export default function RegisterForm() {
 
     if (error) {
       const message =
-        error.code === "USER_ALREADY_EXISTS" || error.status === 422
+        error.code === "USER_ALREADY_EXISTS" || error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL" || error.status === 422
           ? "An account with this email already exists. Log in instead."
           : error.message || "Registration failed. Try again.";
       toast.error(message);
       return;
     }
 
-    toast.success(`Welcome to HateyHat, ${values.name.trim().split(" ")[0]}!`);
+    toast.success(`Welcome to HateyHat, ${cleanName(values.name).split(" ")[0]}!`);
     router.push(redirectTo);
     router.refresh();
   };
 
-  const rules = getPasswordErrors(values.password);
-  const ruleList = [
-    ["at least 6 characters", "6+ characters"],
-    ["an uppercase letter", "Uppercase letter"],
-    ["a lowercase letter", "Lowercase letter"],
-  ];
+  const loginHref = `/login${redirectTo !== "/events" ? `?redirect=${encodeURIComponent(redirectTo)}` : ""}`;
 
   return (
     <>
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
-        <FormField label="Name" htmlFor="name" error={errors.name}>
-          <input id="name" name="name" type="text" autoComplete="name" className={`input w-full ${errors.name ? "input-error" : ""}`} value={values.name} onChange={update} placeholder="Mr Sheikh" aria-invalid={!!errors.name} />
+        <FormField label="Full name" htmlFor="name" error={errors.name}>
+          <input id="name" name="name" type="text" autoComplete="name" maxLength={50} className={`input w-full ${errors.name ? "input-error" : ""}`} value={values.name} onChange={update} onBlur={blur} placeholder="Mr Sheikh" aria-invalid={!!errors.name} />
         </FormField>
 
         <FormField label="Email" htmlFor="email" error={errors.email}>
-          <input id="email" name="email" type="email" autoComplete="email" className={`input w-full ${errors.email ? "input-error" : ""}`} value={values.email} onChange={update} placeholder="you@example.com" aria-invalid={!!errors.email} />
+          <input id="email" name="email" type="email" autoComplete="email" maxLength={254} className={`input w-full ${errors.email ? "input-error" : ""}`} value={values.email} onChange={update} onBlur={blur} placeholder="you@example.com" aria-invalid={!!errors.email} />
         </FormField>
 
         <FormField label="Photo URL" htmlFor="image" error={errors.image} hint="A public link to your profile picture. You can upload a photo later from your profile.">
-          <input id="image" name="image" type="url" className={`input w-full ${errors.image ? "input-error" : ""}`} value={values.image} onChange={update} placeholder="https://..." aria-invalid={!!errors.image} />
+          <input id="image" name="image" type="url" className={`input w-full ${errors.image ? "input-error" : ""}`} value={values.image} onChange={update} onBlur={blur} placeholder="https://..." aria-invalid={!!errors.image} />
         </FormField>
 
         <FormField label="Password" htmlFor="password" error={errors.password}>
-          <div className={`input w-full ${errors.password ? "input-error" : ""}`}>
-            <input id="password" name="password" type={showPassword ? "text" : "password"} autoComplete="new-password" className="grow" value={values.password} onChange={update} aria-invalid={!!errors.password} />
-            <button type="button" className="text-base-content/60 hover:text-base-content" onClick={() => setShowPassword((s) => !s)} aria-label={showPassword ? "Hide password" : "Show password"}>
-              {showPassword ? <LuEyeOff className="h-4 w-4" /> : <LuEye className="h-4 w-4" />}
-            </button>
-          </div>
-          <ul className="flex flex-wrap gap-2 pt-1 text-sm" aria-label="Password requirements">
-            {ruleList.map(([key, label]) => {
-              const ok = values.password && !rules.includes(key);
-              return (
-                <li key={key} className={`badge ${ok ? "badge-success" : "badge-ghost"}`}>
-                  {label}
-                </li>
-              );
-            })}
-          </ul>
+          <PasswordField id="password" value={values.password} onChange={update} onBlur={blur} error={errors.password} autoComplete="new-password" showStrength />
+        </FormField>
+
+        <FormField label="Confirm password" htmlFor="confirm" error={errors.confirm}>
+          <PasswordField id="confirm" name="confirm" value={values.confirm} onChange={update} onBlur={blur} error={errors.confirm} autoComplete="new-password" />
         </FormField>
 
         <button type="submit" className="btn btn-primary w-full" disabled={submitting}>
@@ -127,7 +127,7 @@ export default function RegisterForm() {
 
       <p className="mt-8 text-center text-base-content/75">
         Already have an account?{" "}
-        <Link href={`/login${redirectTo !== "/" ? `?redirect=${encodeURIComponent(redirectTo)}` : ""}`} className="link link-primary font-semibold">
+        <Link href={loginHref} className="link link-primary font-semibold">
           Log in
         </Link>
       </p>
