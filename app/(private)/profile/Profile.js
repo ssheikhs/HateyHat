@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Avatar from "@/components/Avatar";
@@ -30,16 +30,8 @@ function Counts() {
 }
 
 export default function Profile() {
-  const router = useRouter();
   const { data: session, isPending, refetch } = useSession();
   const user = session?.user;
-  const [values, setValues] = useState({ name: "", image: "" });
-  const [errors, setErrors] = useState({});
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    if (user) setValues({ name: user.name || "", image: user.image || "" });
-  }, [user]);
 
   if (isPending || !user) {
     return (
@@ -53,6 +45,15 @@ export default function Profile() {
       </div>
     );
   }
+
+  return <ProfileContent key={`${user.name}|${user.image}`} user={user} refetch={refetch} />;
+}
+
+function ProfileContent({ user, refetch }) {
+  const router = useRouter();
+  const [values, setValues] = useState({ name: user.name || "", image: user.image || "" });
+  const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   const update = (e) => {
     const { name, value } = e.target;

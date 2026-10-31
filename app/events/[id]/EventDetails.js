@@ -65,25 +65,27 @@ export default function EventDetails({ id }) {
   const router = useRouter();
   const { data: session, isPending: sessionLoading } = useSession();
   const { data: event, loading, error, setData } = useApi(`/events/${id}`);
-  const [joined, setJoined] = useState(null);
+  const [joinState, setJoinState] = useState({ key: null, joined: false });
   const [busy, setBusy] = useState(false);
 
   const user = session?.user;
   const isOwner = Boolean(user && event && user.email === event.creatorEmail);
+  const statusKey = user && event && !isOwner ? `${user.email}|${id}` : null;
 
   useEffect(() => {
-    if (!user || !event || isOwner) {
-      setJoined(false);
-      return;
-    }
+    if (!statusKey) return;
     let active = true;
     api(`/events/${id}/join-status`, { auth: true })
-      .then((res) => active && setJoined(res.joined))
-      .catch(() => active && setJoined(false));
+      .then((res) => active && setJoinState({ key: statusKey, joined: res.joined }))
+      .catch(() => active && setJoinState({ key: statusKey, joined: false }));
     return () => {
       active = false;
     };
-  }, [user, event, isOwner, id]);
+  }, [statusKey, id]);
+
+  // null while we are still asking the server
+  const joined = !statusKey ? false : joinState.key === statusKey ? joinState.joined : null;
+  const setJoined = (value) => setJoinState({ key: statusKey, joined: value });
 
   if (loading) return <DetailsSkeleton />;
 

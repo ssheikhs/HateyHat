@@ -1,30 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { LuMoon, LuSun } from "react-icons/lu";
 
 const LIGHT = "hateyhat";
 const DARK = "hateyhat-dark";
 
-export default function ThemeToggle() {
-  const [theme, setTheme] = useState(null);
+function subscribe(callback) {
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
+}
 
-  useEffect(() => {
-    setTheme(document.documentElement.getAttribute("data-theme") || LIGHT);
-  }, []);
+const getTheme = () => document.documentElement.getAttribute("data-theme") || LIGHT;
+
+export default function ThemeToggle() {
+  const theme = useSyncExternalStore(subscribe, getTheme, () => null);
+  const isDark = theme === DARK;
 
   const toggle = () => {
-    const next = theme === DARK ? LIGHT : DARK;
+    const next = isDark ? LIGHT : DARK;
     document.documentElement.setAttribute("data-theme", next);
     try {
       localStorage.setItem("hateyhat-theme", next);
     } catch {
       // storage can be unavailable in private mode; the theme still switches
     }
-    setTheme(next);
   };
-
-  const isDark = theme === DARK;
 
   return (
     <button

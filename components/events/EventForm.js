@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import FormField from "@/components/FormField";
 import { EVENT_TYPES, toLocalInput } from "@/lib/format";
@@ -39,11 +39,10 @@ export default function EventForm({ initialValues, onSubmit, submitLabel, submit
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [previewOk, setPreviewOk] = useState(true);
-  const [minDate, setMinDate] = useState("");
-
-  useEffect(() => {
-    setMinDate(toLocalInput(new Date(Date.now() + 60_000)));
-  }, []);
+  // The earliest selectable time is set when the picker opens, so it is always "now"
+  const setMinToNow = (e) => {
+    e.currentTarget.min = toLocalInput(new Date(Date.now() + 60_000));
+  };
 
   const update = (e) => {
     const { name, value } = e.target;
@@ -109,7 +108,7 @@ export default function EventForm({ initialValues, onSubmit, submitLabel, submit
           </FormField>
 
           <FormField label="Date and time" htmlFor="eventDate" error={errors.eventDate} hint="Only future dates are allowed.">
-            <input id="eventDate" name="eventDate" type="datetime-local" min={minDate} className={`input w-full ${field("eventDate")}`} value={values.eventDate} onChange={update} aria-invalid={!!errors.eventDate} />
+            <input id="eventDate" name="eventDate" type="datetime-local" onFocus={setMinToNow} className={`input w-full ${field("eventDate")}`} value={values.eventDate} onChange={update} aria-invalid={!!errors.eventDate} />
           </FormField>
         </div>
 
