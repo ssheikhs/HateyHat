@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# HateyHat — Social Development Events Platform
 
-## Getting Started
+**HateyHat** (হাতে হাত, "hand in hand") is a community platform where people create, join and track social service events in their neighbourhood: winter clothes distribution in Mirpur, blanket drives in Mohammadpur, tree plantations, blood donation camps and more.
 
-First, run the development server:
+🔗 **Live site:** https://hateyhat.vercel.app
+🔗 **Server repo:** https://github.com/ssheikhs/hateyhat-server
+
+## Features
+
+- **Email/password and social login** with BetterAuth (Google and GitHub), password rules checked on both the form and the server, and toasts for every success and error.
+- **Create events** with title, description, event type, thumbnail, location and a date that must be in the future, with a live preview of the event card while you type.
+- **Upcoming Events** shows only events that haven't happened yet, with search by title or area and quick filters by event type.
+- **Join or leave events** from the public details page; organizers see the list of volunteers who joined.
+- **Manage Events** lets organizers update or delete their own events (the API rejects changes from anyone else), and **Joined Events** lists everything you signed up for, sorted by date.
+- **Profile page** to update your name and photo, with counts of the events you organized and joined.
+- **Light and dark themes** that switch the whole site and remember your choice, plus loading skeletons on every data-driven page.
+- **Protected API**: every private request carries a short-lived JWT signed by BetterAuth and verified by the Express server against the published JWKS.
+
+## Tech stack
+
+Next.js 16 (App Router) · JavaScript · Tailwind CSS 4 · DaisyUI 5 · BetterAuth + MongoDB adapter + JWT plugin · React Hot Toast · SweetAlert2 · Express 5 · MongoDB
+
+## Run locally
 
 ```bash
+npm install
+cp .env.example .env.local   # fill in the values
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The Express server must be running (see the server repo) and `NEXT_PUBLIC_API_URL` must point to it.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Name | Description |
+| --- | --- |
+| `MONGODB_URI` | MongoDB connection string (same cluster as the server) |
+| `DB_NAME` | Database name, e.g. `hateyhat` |
+| `BETTER_AUTH_SECRET` | Long random string |
+| `BETTER_AUTH_URL` / `NEXT_PUBLIC_APP_URL` | URL of this site, e.g. `http://localhost:3000` |
+| `NEXT_PUBLIC_API_URL` | URL of the Express server |
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google OAuth app |
+| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | GitHub OAuth app |
