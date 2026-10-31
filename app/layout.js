@@ -5,6 +5,7 @@ import "@fontsource/hind-siliguri/600.css";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import ThemeScript from "@/components/ThemeScript";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: {
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
         <ThemeScript />
       </head>
       <body className="min-h-screen flex flex-col antialiased">
+        <Navbar />
         <main className="flex-1">{children}</main>
         <Toaster
           position="top-center"
