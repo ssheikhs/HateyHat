@@ -4,7 +4,9 @@
 import { useState } from "react";
 
 export default function Avatar({ src, name = "", size = "h-10 w-10", className = "" }) {
-  const [failed, setFailed] = useState(false);
+  // Remember which link failed, so a new photo gets a fresh try
+  const [failedSrc, setFailedSrc] = useState(null);
+  const failed = failedSrc === src;
   const initials =
     name
       .split(" ")
@@ -29,7 +31,7 @@ export default function Avatar({ src, name = "", size = "h-10 w-10", className =
       src={src}
       alt=""
       referrerPolicy="no-referrer"
-      onError={() => setFailed(true)}
+      onError={() => setFailedSrc(src)}
       className={`${size} ${className} rounded-full object-cover`}
     />
   );
