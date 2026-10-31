@@ -86,7 +86,7 @@ export default function RegisterForm() {
     <>
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
         <FormField label="Name" htmlFor="name" error={errors.name}>
-          <input id="name" name="name" type="text" autoComplete="name" className={`input w-full ${errors.name ? "input-error" : ""}`} value={values.name} onChange={update} placeholder="Ayesha Rahman" aria-invalid={!!errors.name} />
+          <input id="name" name="name" type="text" autoComplete="name" className={`input w-full ${errors.name ? "input-error" : ""}`} value={values.name} onChange={update} placeholder="Mr Sheikh" aria-invalid={!!errors.name} />
         </FormField>
 
         <FormField label="Email" htmlFor="email" error={errors.email}>

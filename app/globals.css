@@ -178,9 +178,16 @@ h4 {
 }
 
 /* Keyboard focus that is always visible */
-:focus-visible {
+:where(a, button, summary, [tabindex]):focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/* Form fields use DaisyUI's own focus ring; the text box inside a
+   wrapped field (like the password box with its eye button) needs none */
+.input input:focus,
+.input input:focus-visible {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
