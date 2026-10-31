@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import FormField from "@/components/FormField";
-import ImageInput from "@/components/ImageInput";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { signUp } from "@/lib/auth-client";
 import { getPasswordErrors, passwordMessage } from "@/lib/password";
@@ -22,7 +21,7 @@ function validate(values) {
     const url = new URL(values.image.trim());
     if (!["http:", "https:"].includes(url.protocol)) throw new Error();
   } catch {
-    errors.image = "Upload a profile photo or paste a link that starts with http:// or https://";
+    errors.image = "Enter a link to your photo that starts with http:// or https://";
   }
   const pw = passwordMessage(values.password);
   if (pw) errors.password = pw;
@@ -94,17 +93,8 @@ export default function RegisterForm() {
           <input id="email" name="email" type="email" autoComplete="email" className={`input w-full ${errors.email ? "input-error" : ""}`} value={values.email} onChange={update} placeholder="you@example.com" aria-invalid={!!errors.email} />
         </FormField>
 
-        <FormField label="Profile photo" htmlFor="image" error={errors.image}>
-          <ImageInput
-            id="image"
-            shape="round"
-            value={values.image}
-            error={errors.image}
-            onChange={(url) => {
-              setValues((v) => ({ ...v, image: url }));
-              if (errors.image) setErrors((err) => ({ ...err, image: undefined }));
-            }}
-          />
+        <FormField label="Photo URL" htmlFor="image" error={errors.image} hint="A public link to your profile picture. You can upload a photo later from your profile.">
+          <input id="image" name="image" type="url" className={`input w-full ${errors.image ? "input-error" : ""}`} value={values.image} onChange={update} placeholder="https://..." aria-invalid={!!errors.image} />
         </FormField>
 
         <FormField label="Password" htmlFor="password" error={errors.password}>
