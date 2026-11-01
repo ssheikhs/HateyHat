@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { LuImageUp, LuLink, LuX } from "react-icons/lu";
 import { API_BASE } from "@/lib/api";
+import { imageUrl } from "@/lib/imageUrl";
 
 const MAX_SIDE = 1600;
 const MAX_UPLOAD = 3 * 1024 * 1024;
@@ -108,7 +109,7 @@ export default function ImageInput({ id, value, onChange, error, placeholder = "
           }`}
         >
           {value ? (
-            <img src={value} alt="" className={`${previewClass} shrink-0 object-cover`} />
+            <img src={imageUrl(value)} alt="" className={`${previewClass} shrink-0 object-cover`} />
           ) : (
             <div className={`${previewClass} flex shrink-0 items-center justify-center bg-base-200`}>
               <LuImageUp className="h-6 w-6 text-base-content/40" />

@@ -10,6 +10,7 @@ import { api } from "@/lib/api";
 import { useApi } from "@/lib/useApi";
 import { confirmAction } from "@/lib/confirm";
 import { formatDate, isPast } from "@/lib/format";
+import { imageUrl } from "@/lib/imageUrl";
 
 function RowSkeleton() {
   return (
@@ -92,7 +93,7 @@ export default function ManageEvents() {
           return (
             <li key={event._id} className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
               <img
-                src={event.thumbnail}
+                src={imageUrl(event.thumbnail)}
                 alt=""
                 onError={(e) => {
                   e.currentTarget.src = FALLBACK_IMAGE;

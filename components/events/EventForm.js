@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import FormField from "@/components/FormField";
 import ImageInput from "@/components/ImageInput";
 import { EVENT_TYPES, toLocalInput } from "@/lib/format";
+import { imageUrl } from "@/lib/imageUrl";
 
 const empty = { title: "", description: "", eventType: "", thumbnail: "", location: "", eventDate: "" };
 
@@ -144,7 +145,7 @@ export default function EventForm({ initialValues, onSubmit, submitLabel, submit
         <div className="ticket overflow-hidden">
           <div className="aspect-[16/10] bg-base-200">
             {values.thumbnail && previewOk ? (
-              <img src={values.thumbnail} alt="" className="h-full w-full object-cover" onError={() => setPreviewOk(false)} />
+              <img src={imageUrl(values.thumbnail)} alt="" className="h-full w-full object-cover" onError={() => setPreviewOk(false)} />
             ) : (
               <div className="flex h-full items-center justify-center p-6 text-center text-sm text-base-content/60">
                 {values.thumbnail ? "This link doesn't load as an image." : "Paste an image link to see it here."}

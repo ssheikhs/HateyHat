@@ -13,6 +13,7 @@ import { api } from "@/lib/api";
 import { useApi } from "@/lib/useApi";
 import { confirmAction } from "@/lib/confirm";
 import { dateParts, daysUntil, formatDate, isPast } from "@/lib/format";
+import { imageUrl } from "@/lib/imageUrl";
 
 function DetailsSkeleton() {
   return (
@@ -184,7 +185,7 @@ export default function EventDetails({ id }) {
 
       <div className="relative aspect-[16/9] overflow-hidden rounded-box bg-base-200 md:aspect-[21/9]">
         <img
-          src={event.thumbnail}
+          src={imageUrl(event.thumbnail)}
           alt=""
           onError={(e) => {
             e.currentTarget.src = FALLBACK_IMAGE;

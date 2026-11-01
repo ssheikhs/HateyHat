@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LuMapPin, LuUsers } from "react-icons/lu";
 import { dateParts, daysUntil } from "@/lib/format";
 import { FALLBACK_IMAGE } from "@/lib/photos";
+import { imageUrl } from "@/lib/imageUrl";
 
 export { FALLBACK_IMAGE };
 
@@ -13,7 +14,7 @@ export default function EventCard({ event, footer }) {
     <article className="ticket flex h-full flex-col overflow-hidden">
       <div className="relative aspect-[16/10] shrink-0 overflow-hidden bg-base-200">
         <img
-          src={event.thumbnail}
+          src={imageUrl(event.thumbnail)}
           alt=""
           loading="lazy"
           onError={(e) => {

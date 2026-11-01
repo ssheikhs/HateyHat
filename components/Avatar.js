@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { imageUrl } from "@/lib/imageUrl";
 
 export default function Avatar({ src, name = "", size = "h-10 w-10", className = "" }) {
   // Remember which link failed, so a new photo gets a fresh try
@@ -28,7 +29,7 @@ export default function Avatar({ src, name = "", size = "h-10 w-10", className =
 
   return (
     <img
-      src={src}
+      src={imageUrl(src)}
       alt=""
       referrerPolicy="no-referrer"
       onError={() => setFailedSrc(src)}
