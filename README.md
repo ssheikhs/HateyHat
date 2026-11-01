@@ -3,7 +3,7 @@
 **HateyHat** (হাতে হাত, "hand in hand") is a community platform where people create, join and track social service events in their neighbourhood: winter clothes distribution in Mirpur, blanket drives in Mohammadpur, tree plantations, blood donation camps and more.
 
 🔗 **Live site:** https://hateyhat.vercel.app
-🔗 **Server repo:** https://github.com/ssheikhs/hateyhat-server
+🔗 **Server repo:** https://github.com/ssheikhs/HateyHat-server
 
 ## Features
 
