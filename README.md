@@ -6,16 +6,14 @@
 
 **A community platform where people in Bangladesh create, join and track social service events.**
 
-Cleanups in Mirpur, winter clothes for Mohammadpur, tree plantations, blood donation camps — find one near you, save your spot, or organize your own.
-
-🔗 **Live site:** [hateyhat.vercel.app](https://hateyhat.vercel.app)  
-📦 **Server repo:** [github.com/ssheikhs/HateyHat-server](https://github.com/ssheikhs/HateyHat-server)
+**Live site:** [hateyhat.vercel.app](https://hateyhat.vercel.app)  
+**Server repo:** [github.com/ssheikhs/HateyHat-server](https://github.com/ssheikhs/HateyHat-server)
 
 </div>
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 | Home | Upcoming events |
 | --- | --- |
@@ -35,7 +33,7 @@ Cleanups in Mirpur, winter clothes for Mohammadpur, tree plantations, blood dona
 
 ---
 
-## ✨ Features
+## Features
 
 - **Email/password and Google login** with BetterAuth. Passwords need an uppercase letter, a lowercase letter and 6+ characters, checked in the form *and* on the server, with a live strength meter.
 - **Create events** with title, description, type, location, date and a thumbnail — paste a link or upload a photo from your computer. Past dates are rejected.
@@ -50,7 +48,7 @@ Cleanups in Mirpur, winter clothes for Mohammadpur, tree plantations, blood dona
 
 ---
 
-## 🧭 Pages
+## Pages
 
 | Page | Route | Who can open it |
 | --- | --- | --- |
@@ -58,18 +56,18 @@ Cleanups in Mirpur, winter clothes for Mohammadpur, tree plantations, blood dona
 | Upcoming Events | `/events` | Everyone |
 | Event details | `/events/:id` | Everyone (joining needs login) |
 | Login / Register | `/login`, `/register` | Everyone |
-| Create Event | `/create-event` | 🔒 Logged-in users |
-| Manage Events | `/manage-events` | 🔒 Logged-in users |
-| Update Event | `/manage-events/:id/edit` | 🔒 The event's organizer |
-| Joined Events | `/joined-events` | 🔒 Logged-in users |
-| My Profile | `/profile` | 🔒 Logged-in users |
+| Create Event | `/create-event` | Logged-in users |
+| Manage Events | `/manage-events` | Logged-in users |
+| Update Event | `/manage-events/:id/edit` | The event's organizer |
+| Joined Events | `/joined-events` | Logged-in users |
+| My Profile | `/profile` | Logged-in users |
 | Privacy / Terms | `/privacy`, `/terms` | Everyone |
 
-🔒 Private pages are checked on the server, so **reloading a private page never sends a logged-in user back to login.**
+Private pages are checked on the server, so reloading a private page never sends a logged-in user back to login.
 
 ---
 
-## 🛠️ Tech stack
+## Tech stack
 
 | Part | Tools |
 | --- | --- |
@@ -84,7 +82,7 @@ Cleanups in Mirpur, winter clothes for Mohammadpur, tree plantations, blood dona
 
 ---
 
-## 🔐 How login and JWT work (simple version)
+## How login and JWT work
 
 1. **BetterAuth** runs inside Next.js at `/api/auth/*`. It stores users and sessions in MongoDB.
 2. When a page needs private data, `lib/api.js` asks BetterAuth for a **JWT** that contains the user's email.
@@ -95,7 +93,7 @@ The browser always talks to `hateyhat.vercel.app/api/server/...`; Next.js forwar
 
 ---
 
-## 📁 Folder structure
+## Folder structure
 
 ```
 app/
@@ -122,7 +120,7 @@ proxy.js                # Sends logged-out visitors from private pages to /login
 
 ---
 
-## 🚀 Run it on your computer
+## Run it on your computer
 
 **You need:** Node.js 20+, a MongoDB database (MongoDB Atlas free tier works), and the [server](https://github.com/ssheikhs/HateyHat-server) running.
 
@@ -148,7 +146,7 @@ Open **http://localhost:3000**.
 | `NEXT_PUBLIC_API_URL` | The Express server's address | `http://localhost:5000` |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | From Google Cloud → Google Auth Platform → Clients | |
 
-> 💡 If your computer and the live site share one database, use the **same** `BETTER_AUTH_SECRET` in both places — BetterAuth uses it to protect its JWT signing key.
+> If your computer and the live site share one database, use the same `BETTER_AUTH_SECRET` in both places.
 
 ### Google login setup
 
@@ -161,7 +159,7 @@ Then publish the app under **Audience** so any Google account can log in.
 
 ---
 
-## ☁️ Deploying to Vercel
+## Deploying to Vercel
 
 1. Deploy the **server** first and copy its URL.
 2. Import this repo on Vercel and add the environment variables above, with:
