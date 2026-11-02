@@ -75,7 +75,10 @@ export default function Footer() {
       <div className="border-t border-[#eceaf8]/15">
         <div className="container-page flex flex-col gap-2 py-6 text-sm text-[#eceaf8]/65 sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} HateyHat. Built for the communities of Bangladesh.</p>
-          <p>Every event is organized by volunteers like you.</p>
+          <p className="flex gap-4">
+            <Link href="/privacy" className="hover:text-[#f6b93b]">Privacy policy</Link>
+            <Link href="/terms" className="hover:text-[#f6b93b]">Terms of service</Link>
+          </p>
         </div>
       </div>
     </footer>
