@@ -68,8 +68,8 @@ export default function Hero() {
         <div className="relative">
           <div className="grid grid-cols-5 grid-rows-6 gap-3 h-[26rem] sm:h-[30rem]">
             <img
-              src={photos.duReliefCollection.src}
-              alt={photos.duReliefCollection.alt}
+              src={photos.waterRickshaw.src}
+              alt={photos.waterRickshaw.alt}
               className="col-span-3 row-span-6 h-full w-full rounded-box object-cover"
             />
             <img

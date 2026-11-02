@@ -10,8 +10,8 @@ export default function LoginPage() {
     <AuthShell
       title="Welcome back"
       subtitle="Log in to join events, track the ones you signed up for and manage what you organize."
-      image={photos.duReliefSort.src}
-      caption={{ title: "Your spot is waiting", text: "Volunteers in Mirpur, Mohammadpur and beyond are already packing relief bags." }}
+      image={photos.waterTeam.src}
+      caption={{ title: "Your spot is waiting", text: "Volunteer teams across Dhaka are already out on the streets. Log in and join the next one." }}
     >
       <Suspense fallback={<div className="skeleton h-80 w-full" />}>
         <LoginForm />
