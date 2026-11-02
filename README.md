@@ -86,20 +86,6 @@ Cleanups in Mirpur, winter clothes for Mohammadpur, tree plantations, blood dona
 
 ## 🔐 How login and JWT work (simple version)
 
-```mermaid
-sequenceDiagram
-    participant U as Browser
-    participant N as Next.js (BetterAuth)
-    participant E as Express API
-    U->>N: Log in (email/password or Google)
-    N-->>U: Session cookie
-    U->>N: GET /api/auth/token
-    N-->>U: Short-lived JWT (1 hour)
-    U->>E: Request + "Authorization: Bearer <JWT>"
-    E->>N: Fetch public keys (/api/auth/jwks)
-    E-->>U: Data, or 401 if the token is missing/invalid
-```
-
 1. **BetterAuth** runs inside Next.js at `/api/auth/*`. It stores users and sessions in MongoDB.
 2. When a page needs private data, `lib/api.js` asks BetterAuth for a **JWT** that contains the user's email.
 3. The JWT is sent to the Express server, which **verifies the signature** with BetterAuth's public keys. No shared password is needed between the two apps.
@@ -185,9 +171,5 @@ Then publish the app under **Audience** so any Google account can log in.
 4. In MongoDB Atlas → Network Access, allow `0.0.0.0/0` so Vercel can connect.
 
 ---
-
-## 🙏 Credits
-
-Photos of community work in Bangladesh are from [Wikimedia Commons](https://commons.wikimedia.org) contributors, used under their open licences. Full credits are on the home page under **Photo credits**.
 
 Built by **[Sheikh Sazzaduzzaman](https://github.com/ssheikhs)**.

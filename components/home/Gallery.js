@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { galleryPhotos, photos } from "@/lib/photos";
+import { galleryPhotos } from "@/lib/photos";
 
 export default function Gallery() {
   return (
@@ -28,20 +28,6 @@ export default function Gallery() {
           </li>
         ))}
       </ul>
-      <details className="mt-6 text-sm text-base-content/60">
-        <summary className="cursor-pointer w-fit">Photo credits</summary>
-        <p className="mt-2">Photos of community work across the site, used under their open licences.</p>
-        <ul className="mt-2 space-y-1">
-          {Object.values(photos).map((photo) => (
-            <li key={photo.page}>
-              <a href={photo.page} target="_blank" rel="noopener noreferrer" className="link link-hover">
-                {photo.caption}
-              </a>{" "}
-              — {photo.credit}, {photo.license}, via Wikimedia Commons
-            </li>
-          ))}
-        </ul>
-      </details>
     </section>
   );
 }
