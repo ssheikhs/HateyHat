@@ -7,7 +7,7 @@
 
 ## Features
 
-- **Email/password and social login** with BetterAuth (Google and GitHub), password rules checked on both the form and the server, and toasts for every success and error.
+- **Email/password and Google login** with BetterAuth, password rules checked on both the form and the server, and toasts for every success and error.
 - **Create events** with title, description, event type, a thumbnail (upload from your computer or paste a link), location and a date that must be in the future, with a live preview of the event card while you type.
 - **Upcoming Events** shows only events that haven't happened yet, with search by title or area and quick filters by event type.
 - **Join or leave events** from the public details page; organizers see the list of volunteers who joined.
@@ -40,4 +40,3 @@ The Express server must be running (see the server repo) and `NEXT_PUBLIC_API_UR
 | `BETTER_AUTH_URL` / `NEXT_PUBLIC_APP_URL` | URL of this site, e.g. `http://localhost:3000` |
 | `NEXT_PUBLIC_API_URL` | URL of the Express server |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google OAuth app |
-| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | GitHub OAuth app |

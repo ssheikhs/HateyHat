@@ -12,7 +12,7 @@ export default function PrivacyPage() {
 
       <h2>What we collect</h2>
       <ul>
-        <li>Your name, email address and profile photo, from the registration form or from Google or GitHub when you sign in with them.</li>
+        <li>Your name, email address and profile photo, from the registration form or from Google when you sign in with it.</li>
         <li>The events you create: title, description, type, photo, location and date.</li>
         <li>The events you join, so organizers can see who is coming and you can see your own list.</li>
         <li>Photos you upload for events or your profile.</li>
@@ -25,10 +25,10 @@ export default function PrivacyPage() {
         <li>We do not sell your data, show ads or share it with third parties.</li>
       </ul>
 
-      <h2>Google and GitHub sign-in</h2>
+      <h2>Google sign-in</h2>
       <p>
-        When you choose Google or GitHub, we receive only your name, email address and profile picture. We never see or
-        store your Google or GitHub password.
+        When you choose Google, we receive only your name, email address and profile picture. We never see or
+        store your Google password.
       </p>
 
       <h2>Your choices</h2>

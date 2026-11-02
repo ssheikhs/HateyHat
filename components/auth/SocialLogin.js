@@ -3,7 +3,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa6";
 import { signIn } from "@/lib/auth-client";
 
 export default function SocialLogin({ redirectTo = "/" }) {
@@ -23,14 +22,10 @@ export default function SocialLogin({ redirectTo = "/" }) {
   };
 
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
-      <button type="button" className="btn btn-outline" onClick={() => handle("google")} disabled={!!loading}>
+    <div className="grid gap-3">
+      <button type="button" className="btn btn-outline w-full" onClick={() => handle("google")} disabled={!!loading}>
         {loading === "google" ? <span className="loading loading-spinner loading-sm" /> : <FcGoogle className="h-5 w-5" />}
-        Google
-      </button>
-      <button type="button" className="btn btn-outline" onClick={() => handle("github")} disabled={!!loading}>
-        {loading === "github" ? <span className="loading loading-spinner loading-sm" /> : <FaGithub className="h-5 w-5" />}
-        GitHub
+        Continue with Google
       </button>
     </div>
   );

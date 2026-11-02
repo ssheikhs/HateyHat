@@ -122,7 +122,7 @@ export default function RegisterForm() {
         </button>
       </form>
 
-      <div className="divider my-6 text-sm text-base-content/60">or sign up with</div>
+      <div className="divider my-6 text-sm text-base-content/60">or</div>
       <SocialLogin redirectTo={redirectTo} />
 
       <p className="mt-8 text-center text-base-content/75">
